@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Chart Tools</title>
+</head>
+<body>
+  <div id="target"></div>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      function drawChart() {
+        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1K7-80Te7xW1LVJeN7gVaP7JHIQMYxsjuH5BesyI21HE/edit?usp=sharing');
+        query.send(handleQueryResponse);
+      }
+
+      function handleQueryResponse(response) {
+        var target = document.getElementById('target');
+        var data;
+        var options = {
+          title: 'My Chart',
+          width: 500,
+          height: 300
+        };
+        var chart = new google.visualization.PieChart(target);
+        data = response.getDataTable();
+        chart.draw(data, options);
+      }
+
+      google.charts.load('current', {packages: ['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+    })();
+  </script>
+</body>
+</html>
